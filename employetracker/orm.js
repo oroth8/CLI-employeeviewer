@@ -30,6 +30,14 @@ update: function(tableName, colName, value, condCol, condVal) {
         console.log(result);
     });},
 
+select: function(tableName, cb) {
+    var queryString = "SELECT * FROM ??;";
+    connection.query(queryString, [tableName], function(err, result) {
+        if (err) throw err;
+        cb(result);
+        // console.log(result);
+    });},
+
 }
 
     

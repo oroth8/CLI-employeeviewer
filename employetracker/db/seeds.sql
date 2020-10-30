@@ -12,4 +12,4 @@ VALUES (2, "manager", 100000, 10);
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
 VALUES (111, "owen", "roth", 1, 5);
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (222, "john", "smith", 2, null);
+VALUES (222, "john", "smith", 2, 0);

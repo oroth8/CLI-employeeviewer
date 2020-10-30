@@ -1,5 +1,7 @@
 var inquirer = require("inquirer");
 var orm = require("./orm");
+var Table = require('cli-table');
+ 
 
 init();
 
@@ -297,13 +299,88 @@ function updateEmp(){
     })
 }
 
+function whatToView(){
+    inquirer
+    .prompt({
+        name: "action",
+        type: "list",
+        message: "What table would you like to view?",
+        choices: [
+            "department",
+            "role",
+            "employee"
+        ]
+    }).then(function(answer){
+        switch(answer.action){
+            case "department":
+            viewDepartment();
+            break;
 
-// update: function(tableName, colName, value, condCol, condVal) {
-//     var queryString = "UPDATE ?? SET ?? = ? WHERE ?? = ?;";
-//     connection.query(queryString, [tableName, colName, value, condCol], 
+            case "role":
+            viewRole();
+            break;
 
+            case "employee":
+            viewEmployee();
+            break;
+        }
+    })
+}
+var table = new Table({
+    head: ['TH 1 label', 'TH 2 label']
+  , colWidths: [10, 20]
+});
+ 
+// table is an Array, so you can `push`, `unshift`, `splice` and friends
+table.push(
+    ['First value', 'Second value']
+  , ['First value', 'Second value']
+);
+ 
+// console.log(table.toString());
 
-// what would you like to add?
-    // department, roles, employees? 
-// what deparment
-    // front-end = 10, back-end = 20
+function viewDepartment(){
+orm.select("department", function(res){
+    var data = res;
+    var table = new Table({
+        head: ["id", "name"],
+        colWidths: [10, 30]
+    })
+    for(let i = 0;i<data.length;i++){
+        table.push(
+            [data[i].id, data[i].name]
+        )
+    }
+    console.log(table.toString());
+});
+}
+function viewRole(){
+orm.select("role", function(res){
+    var data = res;
+    var table = new Table({
+        head: ["id", "title", "salary", "department_id"],
+        colWidths: [10, 30, 30, 30]
+    })
+    for(let i = 0;i<data.length;i++){
+        table.push(
+            [data[i].id, data[i].title, data[i].salary, data[i].department_id]
+        )
+    }
+    console.log(table.toString());
+});
+}
+function viewEmployee(){
+orm.select("employee", function(res){
+    var data = res;
+    var table = new Table({
+        head: ["id", "first_name", "last_name","role_id", "manager_id"],
+        colWidths: [5, 20, 20, 20, 20]
+    })
+    for(let i = 0;i<data.length;i++){
+        table.push(
+            [data[i].id, data[i].first_name, data[i].last_name, data[i].role_id, data[i].manager_id]
+        )
+    }
+    console.log(table.toString());
+});
+}
