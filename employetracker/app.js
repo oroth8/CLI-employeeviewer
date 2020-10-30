@@ -21,15 +21,15 @@ function action(){
     }).then(function(answer){
         switch (answer.action) {
             case "View":
-            whatToAdd();
+            whatToView();
             break;
 
             case "Add":
-            whatToUpdate();
+            whatToAdd();
             break;
 
-            case "View":
-            whatToView();
+            case "Update":
+            whatToUpdate();
             break;
         }
     })
@@ -165,8 +165,9 @@ function whatToUpdate(){
             "employee"
         ]
     }).then(function(answers){
-        switch (answers){
-            case "deparment":
+        switch (answers.action){
+            case "department":
+            console.log("depart")
             updateDep();
             break;
 
@@ -180,6 +181,45 @@ function whatToUpdate(){
         }
     })
 }
+
+function updateDep(){
+    inquirer
+    .prompt([{
+        type: "list",
+        message: "what would you like to update?",
+        name: "col",
+        choices: [
+            "id",
+            "name"
+        ]},
+        {
+            type: "input",
+            message: "what value would you like to update it with?",
+            name: "value",
+        },
+        {
+            type: "list",
+            message: "what condition?",
+            name: "condCol",
+            choices: [
+                "id",
+                "name"
+            ]
+        },
+        {
+            type: "input",
+            name: "condVal",
+            message: "For what conditional value?"
+        }
+    ]).then(function(answers){
+        orm.update("department",answers.col, answers.value, answers.condCol, answers.condVal);
+        console.log("updated department");
+    })
+}
+
+// update: function(tableName, colName, value, condCol, condVal) {
+//     var queryString = "UPDATE ?? SET ?? = ? WHERE ?? = ?;";
+//     connection.query(queryString, [tableName, colName, value, condCol], 
 
 
 // what would you like to add?

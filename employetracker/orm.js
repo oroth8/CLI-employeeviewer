@@ -24,8 +24,8 @@ addEmp: function(id, first_name, last_name, role_id, manager_id) {
     });},
 
 update: function(tableName, colName, value, condCol, condVal) {
-    var queryString = "UPDATE ?? SET ?? = ? WHERE ?? = ?;";
-    connection.query(queryString, [tableName, colName, value, condCol], function(err, result) {
+    var queryString = "UPDATE ?? SET ?? = (?) WHERE ?? = (?);";
+    connection.query(queryString, [tableName, colName, value, condCol, condVal], function(err, result) {
         if (err) throw err;
         console.log(result);
     });},
