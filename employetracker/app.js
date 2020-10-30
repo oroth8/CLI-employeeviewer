@@ -2,13 +2,13 @@ var inquirer = require("inquirer");
 var orm = require("./orm");
 var Table = require('cli-table');
  
-
+// initilizer when node app.js is run in terminal
 init();
-
+// starts the action function
 function init(){
  action();
 }
-
+// prompts user to view, add, or update
 function action(){
     inquirer
     .prompt({
@@ -34,9 +34,11 @@ function action(){
             whatToUpdate();
             break;
         }
-    })
+    }).catch(error => {
+        if(error) throw error 
+});
 }
-
+// prompts user what to add (dep, role, employee) and runs function based on what is inputted by user
 function whatToAdd(){
     inquirer
     .prompt({
@@ -62,9 +64,11 @@ function whatToAdd(){
       case "Add employee?":
         addEmployee();
         break;
-}});
+}}).catch(error => {
+    if(error) throw error 
+});;
 }
-
+// adds a department when the user has selected to add department
 function addDepartment(){
     inquirer
     .prompt([{
@@ -86,7 +90,7 @@ function addDepartment(){
         if(error) throw error 
 });
 }
-
+// adds a role when the user has selected to add a role
 function addRole(){
     inquirer
     .prompt([{
@@ -118,7 +122,7 @@ function addRole(){
         if(error) throw error 
 });
 }
-
+// adds a employee when the user has selected to add an employee
 function addEmployee(){
     inquirer
     .prompt([{
@@ -154,7 +158,7 @@ function addEmployee(){
         if(error) throw error 
 });
 }
-
+// asks user what to update and then runs the function based on response
 function whatToUpdate(){
     inquirer
     .prompt({
@@ -183,7 +187,7 @@ function whatToUpdate(){
         }
     })
 }
-
+// updates the department table
 function updateDep(){
     inquirer
     .prompt([{
@@ -218,7 +222,7 @@ function updateDep(){
         console.log("updated department");
     })
 }
-
+// update dates the role table
 function updateRole(){
     inquirer
     .prompt([{
@@ -257,7 +261,7 @@ function updateRole(){
         console.log("updated role");
     })
 }
-
+// updates the employee table
 function updateEmp(){
     inquirer
     .prompt([{
@@ -298,7 +302,7 @@ function updateEmp(){
         console.log("updated employee");
     })
 }
-
+// asks users what table to display and runs a function based on user input
 function whatToView(){
     inquirer
     .prompt({
@@ -326,19 +330,7 @@ function whatToView(){
         }
     })
 }
-var table = new Table({
-    head: ['TH 1 label', 'TH 2 label']
-  , colWidths: [10, 20]
-});
- 
-// table is an Array, so you can `push`, `unshift`, `splice` and friends
-table.push(
-    ['First value', 'Second value']
-  , ['First value', 'Second value']
-);
- 
-// console.log(table.toString());
-
+// creates a console visible table of department for the user using db as source
 function viewDepartment(){
 orm.select("department", function(res){
     var data = res;
@@ -354,6 +346,7 @@ orm.select("department", function(res){
     console.log(table.toString());
 });
 }
+// creates a console visible table of role for the user using db as source
 function viewRole(){
 orm.select("role", function(res){
     var data = res;
@@ -369,6 +362,7 @@ orm.select("role", function(res){
     console.log(table.toString());
 });
 }
+// creates a console visible table of employee for the user using db as source
 function viewEmployee(){
 orm.select("employee", function(res){
     var data = res;
