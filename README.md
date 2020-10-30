@@ -1,4 +1,4 @@
-
+[![YOUTUBE VIDEO](https://img.youtube.com/vi/nre4SRC4Xas/0.jpg)](https://youtu.be/nre4SRC4Xas)
 # CLI Employee Viewer
 
 # Table of Contents
