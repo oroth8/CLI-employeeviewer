@@ -4,7 +4,35 @@ var orm = require("./orm");
 init();
 
 function init(){
-    whatToAdd();
+ action();
+}
+
+function action(){
+    inquirer
+    .prompt({
+        name: "action",
+        type: "list",
+        message: "what would you like to do?",
+        choices: [
+            "View",
+            "Add",
+            "Update"
+        ]
+    }).then(function(answer){
+        switch (answer.action) {
+            case "View":
+            whatToAdd();
+            break;
+
+            case "Add":
+            whatToUpdate();
+            break;
+
+            case "View":
+            whatToView();
+            break;
+        }
+    })
 }
 
 function whatToAdd(){
@@ -123,6 +151,34 @@ function addEmployee(){
     }).catch(error => {
         if(error) throw error 
 });
+}
+
+function whatToUpdate(){
+    inquirer
+    .prompt({
+        name: "action",
+        type: "list",
+        message: "what would you like to update?",
+        choices: [
+            "department",
+            "role",
+            "employee"
+        ]
+    }).then(function(answers){
+        switch (answers){
+            case "deparment":
+            updateDep();
+            break;
+
+            case "role":
+            updateRole();
+            break;
+
+            case "employee":
+            updateEmp();
+            break;
+        }
+    })
 }
 
 
