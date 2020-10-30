@@ -217,6 +217,45 @@ function updateDep(){
     })
 }
 
+function updateRole(){
+    inquirer
+    .prompt([{
+        type: "list",
+        message: "what would you like to update?",
+        name: "col",
+        choices: [
+            "id",
+            "title",
+            "salary",
+            "department_id"
+        ]},
+        {
+            type: "input",
+            message: "what value would you like to update it with?",
+            name: "value",
+        },
+        {
+            type: "list",
+            message: "what condition?",
+            name: "condCol",
+            choices: [
+                "id",
+                "title",
+                "salary",
+                "department_id"
+            ]
+        },
+        {
+            type: "input",
+            name: "condVal",
+            message: "For what conditional value?"
+        }
+    ]).then(function(answers){
+        orm.update("role",answers.col, answers.value, answers.condCol, answers.condVal);
+        console.log("updated role");
+    })
+}
+
 // update: function(tableName, colName, value, condCol, condVal) {
 //     var queryString = "UPDATE ?? SET ?? = ? WHERE ?? = ?;";
 //     connection.query(queryString, [tableName, colName, value, condCol], 
